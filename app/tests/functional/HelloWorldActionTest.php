@@ -7,7 +7,7 @@ namespace App\Tests\functional;
 use App\Tests\functional\helper\HttpClientAwareTestCase;
 
 /**
- * @covers \App\Controller\HelloWorldAction
+ * @covers \App\Account\UI\Action\HelloWorldAction
  *
  * @internal
  */

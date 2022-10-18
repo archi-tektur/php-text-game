@@ -1,5 +1,5 @@
 controllers:
-    resource: ../src/Controller/
+    resource: ../src/Account/UI/Action
     type: annotation
 
 kernel:
