@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Account\UI\Action;
+namespace App\Game\UI\Action;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

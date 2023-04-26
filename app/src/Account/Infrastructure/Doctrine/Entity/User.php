@@ -19,16 +19,21 @@ class User implements UserInterface
     #[ORM\Column(length: 180, unique: true)]
     private string $ssoId;
 
+    #[ORM\Column(length: 180)]
+    private string $ssoIdType;
+
     #[ORM\Column(length: 64)]
     private string $name;
 
+    /** @var string[] */
     #[ORM\Column]
     private array $roles = [];
 
-    public function __construct(string $ssoId, string $name)
+    public function __construct(string $ssoId, string $ssoIdType, string $name)
     {
         $this->id = Uuid::v4();
         $this->ssoId = $ssoId;
+        $this->ssoIdType = $ssoIdType;
         $this->name = $name;
     }
 
@@ -49,20 +54,26 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getUserIdentifier(): string
+    public function getSsoIdType(): string
     {
-        return (string)$this->ssoId;
+        return $this->ssoIdType;
     }
 
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->ssoId;
+    }
+
+    /** @return string[] */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
 
+    /** @param string[] $roles */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -75,9 +86,7 @@ class User implements UserInterface
         return $this->name;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
     }
 }

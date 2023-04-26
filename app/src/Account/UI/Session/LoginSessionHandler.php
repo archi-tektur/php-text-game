@@ -6,7 +6,7 @@ namespace App\Account\UI\Session;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 
-final class LoginSessionHandler
+final class LoginSessionHandler implements LoginSessionHandlerInterface
 {
     private RequestStack $requestStack;
 
@@ -27,7 +27,6 @@ final class LoginSessionHandler
         $session = $this->requestStack->getSession();
 
         return $session->get('sso_account_token');
-
     }
 
     public function saveUserToken(string $token): void

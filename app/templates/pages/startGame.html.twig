@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include '_partials/_navbar.html.twig' %}
+    <div class="container py-4">
+        <h2 class="card-title">{{ game.name }}</h2>
+        <div style="min-height: 800px" class="d-flex justify-content-center flex-column d-inline-flex p-2 mb-6">
+            {% for card in game.cards %}
+                {% if card.isFirstCard == true %}
+                    <button type="button" class="btn btn-primary"><a data-phpunit-hook='start-game' class="btn text-white" href="{{ url('app.card', {'cardId': card.id}) }}">START GAME</a></button>
+                {% endif %}
+            {% endfor %}
+            {% if game.cards is empty %}
+                <p class="">Game is not ready :<</p>
+            {% endif %}
+            <button type="button" class="btn btn-primary my-4"><a class="btn text-white" href="">LOAD GAME</a></button>
+            <button type="button" class="btn btn-primary mb-5"><a class="btn text-white" href="{{ url('app.games.list') }}">BACK TO THE LIST</a></button>
+        </div>
+    </div>
+{% endblock %}

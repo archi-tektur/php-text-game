@@ -13,12 +13,11 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Account/Infrastructure/Doctrine/Entity'
                 prefix: 'App\Account\Infrastructure\Doctrine\Entity'
                 alias: Account
-
-when@test:
-    doctrine:
-        dbal:
-            # "TEST_TOKEN" is typically set by ParaTest
-            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+            Game:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Game/Infrastructure/Doctrine/Entity'
+                prefix: 'App\Game\Infrastructure\Doctrine\Entity'
+                alias: Game
 
 when@prod:
     doctrine:

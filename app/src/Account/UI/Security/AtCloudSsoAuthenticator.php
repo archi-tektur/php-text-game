@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Account\UI\Security;
 
+use App\Account\Domain\Repository\UserStoreInterface;
 use App\Account\Infrastructure\Doctrine\Entity\User;
-use App\Account\Infrastructure\Doctrine\Repository\UserRepository;
-use App\Account\Infrastructure\Http\AtCloudSso\SsoClient;
-use App\Account\UI\Session\LoginSessionHandler;
+use App\Account\Infrastructure\Http\AtCloudSso\SsoClientInterface;
+use App\Account\UI\Session\LoginSessionHandlerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,20 +22,19 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 final class AtCloudSsoAuthenticator extends AbstractAuthenticator
 {
     private readonly RouterInterface $router;
-    private readonly SsoClient $client;
-    private UserRepository $userRepository;
-    private LoginSessionHandler $loginSessionHandler;
+    private readonly SsoClientInterface $client;
+    private readonly UserStoreInterface $userStore;
+    private readonly LoginSessionHandlerInterface $loginSessionHandler;
 
     public function __construct(
-        RouterInterface     $router,
-        SsoClient           $client,
-        UserRepository      $userRepository,
-        LoginSessionHandler $loginSessionHandler
-    )
-    {
+        RouterInterface $router,
+        SsoClientInterface $client,
+        UserStoreInterface $userStore,
+        LoginSessionHandlerInterface $loginSessionHandler
+    ) {
         $this->router = $router;
         $this->client = $client;
-        $this->userRepository = $userRepository;
+        $this->userStore = $userStore;
         $this->loginSessionHandler = $loginSessionHandler;
     }
 
@@ -53,14 +52,15 @@ final class AtCloudSsoAuthenticator extends AbstractAuthenticator
 
     public function authenticate(Request $request): Passport
     {
+        /** @var string $token checked in previous step */
         $token = $request->query->get('token');
         $account = $this->client->getUser($token);
 
-        $user = $this->userRepository->findOneBy(['ssoId' => $account->identifierValue]);
+        $user = $this->userStore->findBySsoIdentifier($account->identifierValue);
 
-        if ($user === null) {
-            $entity = new User($account->identifierValue, $account->name);
-            $this->userRepository->save($entity, true);
+        if (null === $user) {
+            $entity = new User($account->identifierValue, $account->identifierType, $account->name);
+            $this->userStore->store($entity);
         }
 
         $this->loginSessionHandler->saveUserToken($token);

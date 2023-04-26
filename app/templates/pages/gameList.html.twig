@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include '_partials/_navbar.html.twig' %}
+    <div class="container py-4 hstack gap-3 d-flex flex-wrap p-2">
+        {% for game in games %}
+            <div class="card" style="width: 18rem; height: 20rem">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ game.name }}</h5>
+                    <p class="card-text">{{ game.description }}</p>
+                    <a data-phpunit-hook='select-game' href="{{ url('app.game.select', {'gameId': game.id}) }}">Select Game!</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Account\UI\Listener;
 
-use App\Account\UI\Session\LoginSessionHandler;
+use App\Account\UI\Session\LoginSessionHandlerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 #[AsEventListener(event: LogoutEvent::class)]
 final class OnUserLogout
 {
-    private LoginSessionHandler $loginSessionHandler;
+    private LoginSessionHandlerInterface $loginSessionHandler;
 
-    public function __construct(LoginSessionHandler $loginSessionHandler)
+    public function __construct(LoginSessionHandlerInterface $loginSessionHandler)
     {
         $this->loginSessionHandler = $loginSessionHandler;
     }

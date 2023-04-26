@@ -17,6 +17,9 @@ final class SsoAccount
         $this->identifierValue = $identifierValue;
     }
 
+    /**
+     * @phpstan-ignore-next-line
+     */
     public static function fromApiStructure(array $data): self
     {
         return new self($data['name'], $data['identifier']['type'], $data['identifier']['value']);
