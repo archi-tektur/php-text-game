@@ -25,6 +25,10 @@ jobs:
 
       - name: Run Docker containers
         run: docker-compose up --detach
+      - name: Prepare database structure for functional tests
+        run: docker-compose exec -T app bin/console doctrine:schema:update --force --complete
+      - name: Prepare database fixtures for functional tests
+        run: docker-compose exec -T app bin/console --env=test doctrine:fixtures:load --no-interaction
       - name: Run code lint check
         run: docker-compose exec -T app composer run-lint-check
       - name: Run code static analysis
