@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 final class CardActionTest extends WebTestCase

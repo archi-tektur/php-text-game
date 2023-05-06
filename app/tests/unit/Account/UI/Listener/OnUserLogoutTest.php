@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
+ *
  * @coversNothing
  */
 class OnUserLogoutTest extends TestCase

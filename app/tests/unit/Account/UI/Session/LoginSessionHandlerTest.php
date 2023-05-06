@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @internal
+ *
  * @covers \App\Account\UI\Session\LoginSessionHandler
  */
 class LoginSessionHandlerTest extends TestCase

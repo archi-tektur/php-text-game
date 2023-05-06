@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
+ *
  * @covers \App\Game\UI\Action\GamesListAction
  */
 final class GameListActionTest extends WebTestCase
