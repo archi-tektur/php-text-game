@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Prepare database structure for functional tests
+docker-compose exec -T app bin/console doctrine:schema:update --force --complete
+
+# Prepare database fixtures for functional tests
+docker-compose exec -T app bin/console --env=test doctrine:fixtures:load --no-interaction

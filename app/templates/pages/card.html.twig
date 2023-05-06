@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include '_partials/_navbar.html.twig' %}
+    <div class="container py-4">
+        <div class="card text-center">
+            <h5 class="card-header">{{ card.title }}</h5>
+            <div class="card-body">
+                <p class="card-text">{{ card.text }}</p>
+                <div class="card text-center">
+                    <ul class="list-group list-group-flush">
+                        {% for answer in card.answers %}
+                            {% if answer.targetCard is not null %}
+                                <li class="list-group-item">
+                                    <a data-phpunit-hook='next-card' href="{{ url('app.card', {'cardId': answer.targetCard.id}) }}">{{ answer.text }}</a>
+                                </li>
+                            {% else %}
+                                <li class="list-group-item">{{ answer.text }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card-body text center">
+            <button type="button" class="btn btn-primary"><a data-phpunit-hook='back-to-the-menu' class="btn text-white" href="{{ url('app.game.select', {'gameId': card.game.id}) }}">Back to menu</a></button>
+        </div>
+    </div>
+{% endblock %}

@@ -2,6 +2,7 @@ services:
   app:
     environment:
       PHP_OPCACHE_ENABLE: "false"
+      APP_ENV: "test"
     ports:
       - "8080"
   mariadb:

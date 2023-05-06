@@ -1,5 +1,9 @@
-controllers:
-    resource: ../src/Controller/
+Account:
+    resource: ../src/Account/UI/Action
+    type: annotation
+
+Game:
+    resource: ../src/Game/UI/Action
     type: annotation
 
 kernel:
